@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TopicController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('welcome', function () {
     return view('welcome');
 });
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('posts/{post:slug}', [HomeController::class, 'showPost'])->name('post')->middleware('Canvas\Http\Middleware\Session');
+Route::get('tags/{tag:slug}', [HomeController::class, 'showTag'])->name('tag');
+Route::resource('topics', TopicController::class)->only('index', 'show');
 
 if (config('canvas.path')) {
     Route::redirect('logout', config('canvas.path') . '/logout');

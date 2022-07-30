@@ -22,6 +22,7 @@ class CanvasUiController extends Controller
     {
         return view('canvas-ui')->with([
             'config' => [
+                'name' => config('name'),
                 'canvasPath' => config('canvas.path'),
                 'user' => $request->user('canvas'),
                 'timezone' => config('app.timezone'),
